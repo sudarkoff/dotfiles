@@ -20,25 +20,24 @@ function _relpath () {
 }
 
 # Enumerate file extensions for various programming languages
-c_ext="*.c *.cc *.cp *.cxx *.cpp *.c++ *.C *.i *.ii *.h *.hh *.hp *.hxx *.hpp *.h++"
-cs_ext="*.cs"
-vc_ext="*.vcproj *.sln"
-py_ext="*.py"
-pl_ext="*.pl *.pm"
-java_ext="*.java"
-js_ext="*.js"
-sql_ext="*.sql"
-html_ext="*.htm *.html"
-scons_ext="SConstruct SConscript *.sc"
-mk_ext="Makefile *.mk"
-src_ext="${c_ext} ${cs_ext} ${py_ext} ${pl_ext} ${java_ext} ${js_ext} ${sql_ext} ${html_ext} ${scons_ext} ${mk_ext}"
+c_ext=("*.c" "*.cc" "*.cp" "*.cxx" "*.cpp" "*.c++" "*.C" "*.i" "*.ii" "*.h" "*.hh" "*.hp" "*.hxx" "*.hpp" "*.h++")
+py_ext=("*.py")
+pl_ext=("*.pl" "*.pm")
+java_ext=("*.java")
+js_ext=("*.js")
+sql_ext=("*.sql")
+html_ext=("*.htm" "*.html" "*.css")
+sc_ext=("SConstruct" "SConscript" "*.sc")
+mk_ext=("Makefile" "*.mk")
+src_ext=(${c_ext} ${py_ext} ${pl_ext} ${java_ext} ${js_ext} ${sql_ext} ${html_ext} ${sc_ext} ${mk_ext})
+md_ext=("*.md" "*.mdown" "*.markdown")
 
 # Turn the list of extensions into a condition string for 'find' utility
 function _lang_extensions () {
     local lng_exts=${1}"_ext"
     local exts=""
-    for e in ${!lng_exts}; do
-        if [ -z "$exts" ]; then
+    for e in ${(P)lng_exts}; do
+        if [ -z "${exts}" ]; then
             exts="-name \""$e"\""
         else
             exts="$exts -o -name \""$e"\""
@@ -53,7 +52,7 @@ prune_dir="-type d -name .git -prune -o -type d -name .svn -prune -o -type d -na
 # Grep for a pattern in all all source files for a given language (e.g.: _find_regex c <regex>)
 function _find_regex () {
    if [[ "$1" == "--help" || "$1" == "" ]]; then
-      echo "Usage: _find_regex <c|cs|vc|py|pl|java|js|sql|html|scons|mk|src> <regexp>"
+      echo "Usage: _find_regex <c||py|pl|java|js|sql|html|sc|mk|src|md> <regexp>"
       echo "Search for a 'regexp' in all source files of a specified language starting from the current directory."
       return 1
    fi
@@ -62,7 +61,7 @@ function _find_regex () {
 }
 
 # Define Xfind aliases for various programming languages
-for lng in c cs vc py pl java js sql html scons mk src; do
+for lng in c py pl java js sql html sc mk src md; do
    # Search recursively starting from the current directory (local)
    alias ${lng}find='_find_regex '$lng' $1'
 done
