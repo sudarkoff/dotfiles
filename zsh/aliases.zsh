@@ -45,4 +45,6 @@ alias ungz='tar -zxvf'
 # Various
 alias sel='source $HOME/bin/selectWorkspace.sh $*'
 alias bora='cd $VMTREE'
+alias la='$HOME/bin/log add'
+alias ll='$HOME/bin/log list'
 
