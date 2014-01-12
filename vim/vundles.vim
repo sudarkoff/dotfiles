@@ -45,16 +45,16 @@ Bundle "skwp/vim-easymotion"
 "Bundle "vim-scripts/matchit.zip.git"
 "Bundle "terryma/vim-multiple-cursors"
 
-
 " Tabbable snippets
 Bundle "garbas/vim-snipmate.git"
 Bundle "honza/vim-snippets"
 
-"Search
+" Search
 Bundle "rking/ag.vim"
 Bundle "tjennings/git-grep-vim"
 
 " General vim improvements
+Bundle "fholgado/minibufexpl.vim"
 "Bundle "chrisbra/NrrwRgn"
 Bundle "MarcWeber/vim-addon-mw-utils.git"
 "Bundle "bogado/file-line.git"
@@ -107,7 +107,6 @@ Bundle "bogado/file-line.git"
 Bundle "morhetz/gruvbox"
 
 
-
 " Customization
 " The plugins listed in ~/.vim/.vundles.local will be added here to
 " allow the user to add vim plugins to yadr without the need for a fork.
@@ -117,3 +116,4 @@ endif
 
 "Filetype plugin indent on is required by vundle
 filetype plugin indent on
+

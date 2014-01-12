@@ -17,14 +17,14 @@ alias df='df -h'
 alias du='du -h -d 2'
 
 # Alias Editing
-alias ae='vim $yadr/zsh/aliases.zsh' #alias edit
+alias ae='e $yadr/zsh/aliases.zsh' #alias edit
 alias ar='source $yadr/zsh/aliases.zsh'  #alias reload
 
 # vimrc editing
-alias ve='vim ~/.vimrc'
+alias ve='e ~/.vimrc'
 
 # zsh profile editing
-alias ze='vim ~/.zshrc'
+alias ze='e ~/.zshrc'
 alias zr='source ~/.zshrc'
 
 # Git Aliases
