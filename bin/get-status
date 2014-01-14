@@ -1,0 +1,31 @@
+#!/bin/bash
+
+## Print a status report.
+## 
+## Usage:
+##
+## To list status for the previous week, type:
+## $ get-status -Friday
+##
+## If the relative date is not passed on the command line, assume the following Friday
+## (i.e., print status for the current week).
+
+DATE=$1
+if [ -z "$DATE" ]; then
+    DATE="+Friday"
+fi
+
+printf "$(date -v$DATE -v-4d '+%B %d') -- $(date -v$DATE -v+2d '+%B %d')\n"
+
+# These here are just to avoid typing it every week
+printf "\n## This week\n\n"
+printf "\n## Next week\n\n"
+
+printf "\n## Log entries\n\n"
+log --no-color --no-timestamp list $(date -v$DATE -v-4d +%Y-%m-%d)..$(date -v$DATE -v+2d +%Y-%m-%d) | sed "s/^/- /"
+
+# TODO: List bugzilla activity
+
+printf "\n## Commits\n\n"
+p4 changes -u $P4USER -s submitted @`date -v$DATE -v-4d +%Y/%m/%d`,@`date -v$DATE -v+2d +%Y/%m/%d` | grep -v automerged
+

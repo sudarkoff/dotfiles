@@ -1,0 +1,27 @@
+#!/usr/bin/env python
+
+import os,sys,time
+
+age = time.time() - os.path.getctime(sys.argv[1])
+
+days = int(age / 86400)
+hours = int(age / 3600) - (days * 24)
+minutes = int(age / 60) - (days * 24 * 60) - (hours * 60)
+
+age_string = []
+if days > 0:
+    if days == 1:
+        age_string.append("%s day" % days)
+    else:
+        age_string.append("%s days" % days)
+if hours > 0:
+    if hours == 1:
+        age_string.append("%s hour" % hours)
+    else:
+        age_string.append("%s hours" % hours)
+if minutes == 1:
+    age_string.append("%s minute" % minutes)
+else:
+    age_string.append("%s minutes" % minutes)
+
+print "%s ago" % (" ".join(age_string)) ,
