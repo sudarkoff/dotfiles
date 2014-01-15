@@ -1,16 +1,10 @@
 #
-# A theme based on steeef theme
-#  * RVM/Rbenv info shown on the right
+# A theme based on skwp theme
 #  * Git branch info on the left
-#  * Single line prompt
+#  * Two-line prompt
 #
 # Authors:
-#   Steve Losh <steve@stevelosh.com>
-#   Bart Trojanowski <bart@jukie.net>
-#   Brian Carper <brian@carper.ca>
-#   steeef <steeef@gmail.com>
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#   Yan Pritzker <yan@pritzker.ws>
+#   George Sudarkoff <george@sudarkoff.com>
 
 function prompt_sudarkoff_precmd {
   setopt LOCAL_OPTIONS
@@ -20,11 +14,6 @@ function prompt_sudarkoff_precmd {
   if (( $+functions[git-info] )); then
     git-info on
     git-info
-  fi
-
-  # Get ruby information
-  if (( $+functions[ruby-info] )); then
-    ruby-info
   fi
 }
 
@@ -57,6 +46,7 @@ function prompt_sudarkoff_setup {
   fi
 
   # git
+  zstyle ':prezto:module:git:info' verbose 'no'
   zstyle ':prezto:module:git:info:action' format '! %s'
   zstyle ':prezto:module:git:info:added' format "✚"
   zstyle ':prezto:module:git:info:ahead' format '⬆'
@@ -72,13 +62,9 @@ function prompt_sudarkoff_setup {
   zstyle ':prezto:module:git:info:untracked' format "?"
   zstyle ':prezto:module:git:info:keys' format 'prompt' '(%b%A%B%S%a%d%m%r%U%u)'
 
-  # ruby info (rvm, rbenv)
-  zstyle ':prezto:module:ruby:info:version' format '[%v]'
-
   # TODO: Make hostname hotpink (_COLORS[4]) if logged in via ssh
   PROMPT="${__PROMPT_SUDARKOFF_COLORS[1]}%~%f ${__PROMPT_SUDARKOFF_COLORS[2]}"'$git_info[prompt]'"%f
 ${__PROMPT_SUDARKOFF_COLORS[3]}%n%f@${__PROMPT_SUDARKOFF_COLORS[5]}%m%f $ "
-  RPROMPT='%F{blue}${ruby_info[version]}'
 }
 
 prompt_sudarkoff_setup "$@"
