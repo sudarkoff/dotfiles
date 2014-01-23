@@ -16,6 +16,7 @@ task :install => [:submodule_init, :submodules] do
   file_operation(Dir.glob('git/*')) if want_to_install?('git configs (color, aliases)')
   file_operation(Dir.glob('ctags/*')) if want_to_install?('ctags config (better js/ruby support)')
   file_operation(Dir.glob('vimify/*')) if want_to_install?('vimification of command line tools')
+  file_operation(Dir.glob('slate')) if want_to_install?('slate config (window location and control)')
   if want_to_install?('vim configuration (highly recommended)')
     file_operation(Dir.glob('{vim,vimrc}'))
     Rake::Task["install_vundle"].execute
