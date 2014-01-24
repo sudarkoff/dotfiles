@@ -13,7 +13,7 @@ alias mon-dell22inch  1920x1080
 # Position Aliases
 alias 1-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY       ${mon-laptop1440}
 alias 1-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY     ${mon-laptop1440}
-alias 2-main  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY         ${mon-dell22inch}
+alias 2-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY         ${mon-dell22inch}
 alias 2-bot   move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX;screenSizeY/2       ${mon-dell22inch}
 alias 2-bot-l move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX/3;screenSizeY/2     ${mon-dell22inch}
 alias 2-bot-m move screenOriginX+screenSizeX/3;screenOriginY+screenSizeY/2   screenSizeX/3;screenSizeY/2     ${mon-dell22inch}
@@ -27,12 +27,12 @@ alias 2-left  move screenOriginX;screenOriginY                               scr
 alias 2-right move screenOriginX+screenSizeX/2;screenOriginY                 screenSizeX/2;screenSizeY       ${mon-dell22inch}
 
 # 2 Monitor layout
-layout 2monitors 'Terminal':SORT_TITLE                    ${2-main} | ${2-bot-l} | ${2-bot-m} | ${2-bot-r}
+layout 2monitors 'Terminal':SORT_TITLE                    ${2-full}
 layout 2monitors 'Google Chrome':REPEAT                   ${1-main}
-layout 2monitors 'MacVim'                                 ${2-top-r} | ${2-top-l} | ${2-top-m}
+layout 2monitors 'MacVim'                                 ${2-full}
 layout 2monitors 'Adium':IGNORE_FAIL,TITLE_ORDER=Contacts ${1-chat} | ${1-main}
-layout 2monitors 'Xcode':REPEAT                           ${2-top}
-layout 2monitors 'Eclipse':REPEAT                         ${2-bot}
+layout 2monitors 'Xcode':REPEAT                           ${2-full}
+layout 2monitors 'Eclipse':REPEAT                         ${2-full}
 layout 2monitors 'Spotify':REPEAT                         ${1-main}
 
 # 1 Monitor layout
