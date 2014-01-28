@@ -1,4 +1,4 @@
-# Configs
+### Configs
 config defaultToCurrentScreen true
 config nudgePercentOf screenSize
 config resizePercentOf screenSize
@@ -6,13 +6,22 @@ config secondsBetweenRepeat 0.1
 config checkDefaultsOnLoad true
 config focusCheckWidthMax 3000
 
-# Monitor Aliases
+### Monitor Aliases
 alias mon-laptop1440  1440x900
-alias mon-dell22inch  1920x1080
+alias mon-dell22inch  1920x1200
 
-# Position Aliases
+### Position Aliases
+
+# laptop1440 (my non-retina macbook pro and air)
 alias 1-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY       ${mon-laptop1440}
 alias 1-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY     ${mon-laptop1440}
+alias 1-cntr  move screenOriginX+screenSizeX/9;screenOriginY+screenSizeY/9   7*screenSizeX/9;7*screenSizeY/9 ${mon-laptop1440}
+alias 1-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY         ${mon-laptop1440}
+
+# dell monitor
+alias 2-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY       ${mon-dell22inch}
+alias 2-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY     ${mon-dell22inch}
+alias 2-cntr  move screenOriginX+screenSizeX/9;screenOriginY+screenSizeY/9   7*screenSizeX/9;7*screenSizeY/9 ${mon-dell22inch}
 alias 2-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY         ${mon-dell22inch}
 alias 2-bot   move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX;screenSizeY/2       ${mon-dell22inch}
 alias 2-bot-l move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX/3;screenSizeY/2     ${mon-dell22inch}
@@ -26,78 +35,36 @@ alias 2-top-r move screenOriginX+screenSizeX/2;screenOriginY                 scr
 alias 2-left  move screenOriginX;screenOriginY                               screenSizeX/2;screenSizeY       ${mon-dell22inch}
 alias 2-right move screenOriginX+screenSizeX/2;screenOriginY                 screenSizeX/2;screenSizeY       ${mon-dell22inch}
 
-# 2 Monitor layout
+### 2 Monitor layout
 layout 2monitors 'Terminal':SORT_TITLE                    ${2-full}
-layout 2monitors 'Google Chrome':REPEAT                   ${1-main}
-layout 2monitors 'MacVim'                                 ${2-full}
-layout 2monitors 'Adium':IGNORE_FAIL,TITLE_ORDER=Contacts ${1-chat} | ${1-main}
+layout 2monitors 'Google Chrome':REPEAT                   ${2-cntr}
+layout 2monitors 'MacVim':REPEAT                          ${2-full}
+layout 2monitors 'Adium':IGNORE_FAIL,TITLE_ORDER=Contacts ${1-chat}
 layout 2monitors 'Xcode':REPEAT                           ${2-full}
-layout 2monitors 'Eclipse':REPEAT                         ${2-full}
-layout 2monitors 'Spotify':REPEAT                         ${1-main}
+layout 2monitors 'Evernote':REPEAT                        ${1-full}
+layout 2monitors 'Spotify':REPEAT                         ${1-full}
 
-# 1 Monitor layout
-layout 1monitor 'Terminal':SORT_TITLE,REPEAT             ${1-main}
-layout 1monitor 'Google Chrome':REPEAT                   ${1-main}
-layout 1monitor 'MacVim':REPEAT                          ${1-main}
-layout 1monitor 'Adium':IGNORE_FAIL,TITLE_ORDER=Contacts ${1-chat} | ${1-main}
-layout 1monitor 'Xcode':REPEAT                           ${1-main}
-layout 1monitor 'Eclipse':REPEAT                         ${1-main}
-layout 1monitor 'Spotify':REPEAT                         ${1-main}
+### 1 Monitor layout
+layout 1monitor 'Terminal':SORT_TITLE,REPEAT             ${1-full}
+layout 1monitor 'Google Chrome':REPEAT                   ${1-full}
+layout 1monitor 'MacVim':REPEAT                          ${1-full}
+layout 1monitor 'Adium':IGNORE_FAIL,TITLE_ORDER=Contacts ${1-chat}
+layout 1monitor 'Xcode':REPEAT                           ${1-full}
+layout 1monitor 'Evernote':REPEAT                        ${1-full}
+layout 1monitor 'Spotify':REPEAT                         ${1-full}
+layout 1monitor 'Pocket':REPEAT                          ${1-full}
 
-# Default Layouts
+### Default Layouts
 default 2monitors resolutions:${mon-laptop1440};${mon-dell22inch}
 default 1monitor  resolutions:${mon-laptop1440}
 
-# Basic location Bindings
-bind [:ctrl    ${1-chat}
-bind ]:ctrl    ${1-main}
+### Basic Move Bindings
+bind 1:ctrl,cmd,shift    ${1-full}
+bind 2:ctrl,cmd,shift    ${2-full}
 
-# Resize Bindings
-# NOTE: some of these may *not* work if you have not removed the expose/spaces/mission control bindings
-bind right:ctrl resize +10% +0
-bind left:ctrl  resize -10% +0
-bind up:ctrl    resize +0   -10%
-bind down:ctrl  resize +0   +10%
-bind right:alt  resize -10% +0 bottom-right
-bind left:alt   resize +10% +0 bottom-right
-bind up:alt     resize +0   +10% bottom-right
-bind down:alt   resize +0   -10% bottom-right
-
-# Push Bindings
-# NOTE: some of these may *not* work if you have not removed the expose/spaces/mission control bindings
-bind right:ctrl;shift push right bar-resize:screenSizeX/3
-bind left:ctrl;shift  push left  bar-resize:screenSizeX/3
-bind up:ctrl;shift    push up    bar-resize:screenSizeY/2
-bind down:ctrl;shift  push down  bar-resize:screenSizeY/2
-
-# Nudge Bindings
-# NOTE: some of these may *not* work if you have not removed the expose/spaces/mission control bindings
-bind right:ctrl;alt nudge +10% +0
-bind left:ctrl;alt  nudge -10% +0
-bind up:ctrl;alt    nudge +0   -10%
-bind down:ctrl;alt  nudge +0   +10%
-
-# Throw Bindings
-# NOTE: some of these may *not* work if you have not removed the expose/spaces/mission control bindings
-bind right:ctrl;alt;cmd throw right resize
-bind left:ctrl;alt;cmd  throw left  resize
-bind up:ctrl;alt;cmd    throw up    resize
-bind down:ctrl;alt;cmd  throw down  resize
-
-# Focus Bindings
-# NOTE: some of these may *not* work if you have not removed the expose/spaces/mission control bindings
-bind right:cmd    focus right
-bind left:cmd     focus left
-bind up:cmd       focus up
-bind down:cmd     focus down
-bind up:cmd;alt   focus behind
-bind down:cmd;alt focus behind
-
+### Focus Bindings
 # Window Hints
 bind esc:cmd hint
-
-# Switch currently doesn't work well so I'm commenting it out until I fix it.
-#bind tab:ctrl switch
 
 # Grid
 bind esc:ctrl grid
