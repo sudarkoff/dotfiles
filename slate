@@ -38,6 +38,7 @@ alias 2-right move screenOriginX+screenSizeX/2;screenOriginY                 scr
 ### 2 Monitor layout
 layout 2monitors 'Terminal':SORT_TITLE                    ${2-full}
 layout 2monitors 'Google Chrome':REPEAT                   ${2-cntr}
+layout 2monitors 'Mail':REPEAT                            ${1-full}
 layout 2monitors 'MacVim':REPEAT                          ${2-full}
 layout 2monitors 'Adium':IGNORE_FAIL,TITLE_ORDER=Contacts ${1-chat}
 layout 2monitors 'Xcode':REPEAT                           ${2-full}
@@ -49,6 +50,7 @@ layout 2monitors 'Pocket':REPEAT                          ${1-full}
 ### 1 Monitor layout
 layout 1monitor 'Terminal':SORT_TITLE,REPEAT             ${1-full}
 layout 1monitor 'Google Chrome':REPEAT                   ${1-full}
+layout 1monitor 'Mail':REPEAT                            ${1-full}
 layout 1monitor 'MacVim':REPEAT                          ${1-full}
 layout 1monitor 'Adium':IGNORE_FAIL,TITLE_ORDER=Contacts ${1-chat}
 layout 1monitor 'Xcode':REPEAT                           ${1-full}
