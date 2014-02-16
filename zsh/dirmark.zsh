@@ -33,3 +33,11 @@ function - () {
    eval unset mm_$1;
 }
 
+# preset a dirmark if the target directory exists
+# (used primarily in other functions or .bashrc* configs)
+function _m_set() {
+   if [ -d $2 ]; then
+      eval mm_$1=$2;
+   fi
+}
+

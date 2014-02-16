@@ -77,6 +77,7 @@ Bundle "tomtom/tlib_vim.git"
 "Bundle "vim-scripts/sudo.vim"
 "Bundle "xsunsmile/showmarks.git"
 "Bundle "terryma/vim-multiple-cursors"
+Bundle "rbgrouleff/bclose.vim"
 
 " Session Management
 "vim-misc is required for vim-session
