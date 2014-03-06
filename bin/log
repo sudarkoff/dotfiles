@@ -240,7 +240,7 @@ class Log(object):
       if (not self.options.no_timestamp):
          items.sort(reverse_date_sort)
 
-      re_context = re.compile(r"(\@[A-Za-z]+)\s+")
+      re_context = re.compile(r"(\@[0-9A-Za-z-_]+)\s+")
       for item in items:
          if (self.options.no_context):
             print re_context.sub(remove_context, item)
