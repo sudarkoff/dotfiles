@@ -30,6 +30,7 @@ log $LOG_OPTS list @review $LOG_DATE_RANGE | sed "s/^/- /"
 
 printf "\n## Commits\n\n"
 p4 changes -u $P4USER -s submitted @`date -v$DATE -v-4d +%Y/%m/%d`,@`date -v$DATE -v+2d +%Y/%m/%d` | grep -v automerged
+p4 changes -u $P4USER -s pending @`date -v$DATE -v-4d +%Y/%m/%d`,@`date -v$DATE -v+2d +%Y/%m/%d` | grep -v automerged
 
 printf "\n## Next week\n\n"
 printf "<what's next?>\n"
