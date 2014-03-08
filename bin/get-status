@@ -10,6 +10,24 @@
 # If the relative date is not passed on the command line, assume the following Friday
 # (i.e., print status for the current week).
 
+# TODO: cover the following use cases:
+#  - if date range is passed (mm/dd[/yy][..mm/dd[/yy]]), list items for that range
+#    $ get-status 3/3
+#    $ get-status 3/3..3/9
+#  - if "this" (or no parameters) is passed, list items from last Monday till next Friday (this week)
+#    $ get-status
+#  - if "last" is passed, list items from previous Monday till previous Friday (previous week)
+#    # get-status last
+
+function get_date() {
+  if date -v 1d > /dev/null 2>&1; then
+    DATE='date -v $1'
+  else
+    DATE='date --date="$1"'
+  fi
+  echo eval $DATE
+}
+
 # TODO: List bugzilla activity
 
 DATE=${1:-+Friday}
