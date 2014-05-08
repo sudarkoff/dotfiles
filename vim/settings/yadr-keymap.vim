@@ -26,18 +26,6 @@ endfunction
 " dashes are very common, and in position that require
 " a lot of hand movement. Vim to the rescue
 "
-" Now using the middle finger of either hand you can type
-" underscores with apple-k or apple-d, and add Shift
-" to type dashes
-imap <silent> <D-k> _
-imap <silent> <D-d> _
-imap <silent> <D-K> -
-imap <silent> <D-D> -
-
-" ,# Surround a word with #{ruby interpolation}
-map ,# ysiw#
-vmap ,# c#{<C-R>"}<ESC>
-
 " ," Surround a word with "quotes"
 map ," ysiw"
 vmap ," c"<C-R>""<ESC>
@@ -113,6 +101,8 @@ autocmd FileType rspec map <buffer> <D-j> }
 autocmd FileType rspec map <buffer> <D-k> {
 autocmd FileType javascript map <buffer> <D-k> }
 autocmd FileType javascript map <buffer> <D-j> {
+autocmd FileType c map <buffer> <D-k> }
+autocmd FileType c map <buffer> <D-j> {
 
 
 " Command-/ to toggle comments
@@ -128,9 +118,9 @@ nnoremap ,gcf :call GitGrep(expand("%:t:r"))<CR>
 
 
 "Move back and forth through previous and next buffers
-"with ,z and ,x
-nnoremap <silent> ,z :bp<CR>
-nnoremap <silent> ,x :bn<CR>
+"with ,l and ,h
+nnoremap <silent> ,l :bp<CR>
+nnoremap <silent> ,h :bn<CR>
 
 " ==============================
 " Window/Tab/Split Manipulation
@@ -171,12 +161,6 @@ nnoremap <D-Up> <C-w>+
 nnoremap <D-Down> <C-w>-
 nnoremap <D-Left> <C-w><
 nnoremap <D-Right>  <C-w>>
-
-" create <%= foo %> erb tags using Ctrl-k in edit mode
-imap <silent> <C-K> <%=   %><Esc>3hi
-
-" create <%= foo %> erb tags using Ctrl-j in edit mode
-imap <silent> <C-J> <%  %><Esc>2hi
 
 " ============================
 " Shortcuts for everyday tasks
@@ -228,3 +212,4 @@ map <D-%> :so %<CR>
 
 " ,hp = html preview
 map <silent> ,hp :!open -a Safari %<CR><CR>
+
