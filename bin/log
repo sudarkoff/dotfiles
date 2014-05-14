@@ -18,15 +18,15 @@ from optparse import OptionParser
 # CONFIGURATION PARAMETERS
 # ====================================================================
 DEFAULT_TIME_PERIOD=30
-CONTEXT_COLORS={}
+TAG_COLORS={}
 LOG_FILE = "%s/log.txt" % (os.environ.get("HOME"))
 
 # Load local configuration from ~/.log.py
 CONFIG_FILE="%s/.log.py" % (os.environ.get("HOME"))
 execfile(CONFIG_FILE)
 
-# Colors for common contexts.
-# Unrecognized contexts will be shown with WHITE color.
+# Colors for common tags.
+# Unrecognized tags will be printed with WHITE color.
 NONE         = ""
 BLACK        = "\033[0;30m"
 RED          = "\033[0;31m"
@@ -46,10 +46,9 @@ LIGHT_CYAN   = "\033[1;36m"
 WHITE        = "\033[1;37m"
 DEFAULT      = "\033[0m"
 
-contextColors = dict(list(CONTEXT_COLORS.items()) + list({
+tagColors = dict(list(TAG_COLORS.items()) + list({
    "@meta": DARK_GREY,
    "@warn": LIGHT_RED,
-   "@home": LIGHT_GREEN,
 }.items()))
 
 # N days back from today
@@ -57,20 +56,20 @@ defaultTimePeriod = DEFAULT_TIME_PERIOD
 
 # ====================================================================
 
-def highlight_context(matchobj):
+def highlight_tags(matchobj):
    """
-   Highlight context tags.
+   Highlight tags.
    """
    COLOR = None
    try:
-      COLOR = contextColors[matchobj.group(1)]
+      COLOR = tagColors[matchobj.group(1)]
    except KeyError:
       COLOR = WHITE
    return COLOR + matchobj.group(1) + " " + DEFAULT
 
-def remove_context(matchobj):
+def remove_tags(matchobj):
    """
-   Remove context tags.
+   Remove tags.
    """
    return ""
 
@@ -94,15 +93,15 @@ class LogRecord(object):
    LogRecord contains a single record from the log file.
 
    Log-file parser expects the following format:
-   yyyy-mm-dd hh:mm:ss [@context[ ...]] Log message.
+   yyyy-mm-dd hh:mm:ss [@tag[ ...]] Log message.
    
    TODO: This class is currently not in use. Implement parsing log entries
-   into the array of these puppies and it'll be much easier to remove @context,
+   into the array of these puppies and it'll be much easier to remove tags,
    timestamp, color, reshuffle stuff, etc.
    """
    def __init__(self):
       self.timestamp = timestamp.now()
-      self.contexts = []
+      self.tags = []
       self.message = None
 
    def from_string(self, line):
@@ -124,11 +123,11 @@ class Log(object):
          if (self.args):
             self.addAction(" ".join(self.args))
          else:
-            self.parser.error("usage: %prog add [@context[ ...]] log message")
+            self.parser.error("usage: %prog add [@tag[ ...]] log message")
       # List
       elif (self.action == "ls" or self.action == "list"):
          if (len(self.args) > 0):
-            contexts = []
+            tags = []
             from_date = None
             to_date = None
             re_from_date = re.compile(r"([0-9]{4}-[0-9]{2}-[0-9]{2})\.\.?.*")
@@ -137,7 +136,7 @@ class Log(object):
 
             for arg in self.args:
                if (re.compile(r"\@[A-Za-z]+").search(arg)):
-                  contexts.append(arg)
+                  tags.append(arg)
                else:
                   if (re_days.match(arg)):
                      match = re_days.search(arg).group(0)
@@ -152,7 +151,7 @@ class Log(object):
                      else:
                         # if to_date is not specified, use current date
                         to_date = datetime.now()
-            self.listAction(from_date, to_date, len(contexts) > 0 and contexts or None)
+            self.listAction(from_date, to_date, len(tags) > 0 and tags or None)
          else:
             # by default list entries from the last defaultTimePeriod days
             (from_date, to_date) = self._dateDaysAgo(defaultTimePeriod)
@@ -171,7 +170,7 @@ class Log(object):
       Parsing command-line options.
       """
       usage = "usage: %prog [options] <add|ls|list|tags>\n\t[D|YYYY-MM-DD..[YYYY-MM-DD]]\n\t" + \
-              "[@context[ ...]]\n\t[message]"
+              "[@tag[ ...]]\n\t[message]"
       self.parser = OptionParser(usage=usage, version="%prog " + __version__)
       self.parser.add_option("-c", "--no-color",
                              action="store_true", dest="no_color", default=False,
@@ -179,9 +178,9 @@ class Log(object):
       self.parser.add_option("-t", "--no-timestamp",
                              action="store_true", dest="no_timestamp", default=False,
                              help="do not show timestamp [default: %default]")
-      self.parser.add_option("-x", "--no-context",
-                             action="store_true", dest="no_context", default=False,
-                             help="do not show context [default: %default]")
+      self.parser.add_option("-x", "--no-tags",
+                             action="store_true", dest="no_tags", default=False,
+                             help="do not show tags [default: %default]")
       (self.options, args) = self.parser.parse_args()
       self.action = len(args) > 0 and args[0] or None
       self.args = len(args) > 1 and args[1:] or []
@@ -211,18 +210,18 @@ class Log(object):
       f.write("%s %s%s" % (timestamp, message, os.linesep))
       f.close()
 
-   def listAction(self, from_date=None, to_date=None, contexts=None):
+   def listAction(self, from_date=None, to_date=None, tags=None):
       """
       List log records that meet specified criteria.
       """
       items = []
       records = self.get_log_dict(from_date, to_date)
 
-      if (contexts is not None):
+      if (tags is not None):
          for timestamp, message in records.iteritems():
             match = False
-            for context in contexts:
-               if (re.search(context, message, re.IGNORECASE)): match = True
+            for tag in tags:
+               if (re.search(tag, message, re.IGNORECASE)): match = True
             if (match == True):
                if (not self.options.no_timestamp):
                   items.append("%s %s" % (timestamp, message))
@@ -240,12 +239,12 @@ class Log(object):
       if (not self.options.no_timestamp):
          items.sort(reverse_date_sort)
 
-      re_context = re.compile(r"(\@[0-9A-Za-z-_]+)\s+")
+      re_tag = re.compile(r"(\@[0-9A-Za-z-_]+)\s+")
       for item in items:
-         if (self.options.no_context):
-            print re_context.sub(remove_context, item)
+         if (self.options.no_tags):
+            print re_tag.sub(remove_tags, item)
          elif (not self.options.no_color):
-            print re_context.sub(highlight_context, item)
+            print re_tag.sub(highlight_tags, item)
          else:
             print item
 
@@ -254,9 +253,9 @@ class Log(object):
       List all recognized context tags.
       """
       print "Colored context tags:"
-      re_context = re.compile(r"(\@[A-Za-z]+)")
-      for key in sorted(contextColors.keys()):
-         print "\t%s" % re_context.sub(highlight_context, key)
+      re_tag = re.compile(r"(\@[A-Za-z]+)")
+      for key in sorted(tagColors.keys()):
+         print "\t%s" % re_tag.sub(highlight_tags, key)
 
 if __name__ == "__main__":
    log = Log()
