@@ -27,24 +27,10 @@ alias ve='e ~/.vimrc'
 alias ze='e ~/.zshrc'
 alias zr='source ~/.zshrc'
 
-# Git Aliases
-alias gc='git commit -m'
-alias gs='git status'
-alias ga='git add -A'
-alias gp='git pull'
-alias gr='git rebase'
-alias gd='git diff'
-
 # Common shell functions
 alias less='less -r'
 
 # Zippin
 alias gz='tar -zcvf'
 alias ungz='tar -zxvf'
-
-# Various
-alias sel='source $HOME/bin/selectWorkspace.sh $*'
-alias bora='cd $VMTREE'
-alias la='$HOME/.yadr/bin/log add'
-alias ll='$HOME/.yadr/bin/log list'
 
