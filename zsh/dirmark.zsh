@@ -23,6 +23,13 @@ function + () {
    fi
 }
 
+# check whether a directory exists and set the dirmark if it does
+function dirmark () {
+   if [ -d $2 ]; then
+      eval mm_$1=$2
+   fi
+}
+
 # add new dirmark (or override the existing one) for the current directory
 function m () {
    eval mm_$1=`pwd`;
