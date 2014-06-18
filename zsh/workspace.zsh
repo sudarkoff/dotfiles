@@ -22,14 +22,12 @@ function sel() {
   fi
 
   # Set the project directory
-  if [ -n ${1} ]; then
-     if [ -d ${SRC}/${1} ]; then
-       export VMBRANCH=${1}
-       export VMTREE=${SRC}/${1}/bora
-    else
-       echo "ERROR: Folder doesn't exist: ${SRC}/${1}"
-       echo "Branch name '${1}' misspelled, perhaps?"
-    fi
+  if [ -d ${SRC}/${1} ]; then
+     export VMBRANCH=${1}
+     export VMTREE=${SRC}/${1}/bora
+  else
+     echo "ERROR: Folder doesn't exist: ${SRC}/${1}"
+     echo "Branch name '${1}' misspelled, perhaps?"
   fi
 
   # Set product
