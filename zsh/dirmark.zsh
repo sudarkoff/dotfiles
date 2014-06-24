@@ -34,7 +34,7 @@ function - () {
 }
 
 # preset a dirmark if the target directory exists
-# (used primarily in other functions or .bashrc* configs)
+# (used primarily in other functions or *.zsh configs)
 function _m_set() {
    if [ -d $2 ]; then
       eval mm_$1=$2;
