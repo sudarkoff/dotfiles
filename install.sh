@@ -1,6 +1,8 @@
 #!/bin/sh
 
-set -
+set -o nounset
+set -o errexit
+set -o pipefail
 
 if [ ! -d "$HOME/.yadr" ]; then
     echo "Installing YADR for the first time"
