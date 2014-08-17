@@ -9,10 +9,9 @@ if [ ! -d "$HOME/.yadr" ]; then
     brew update
     brew install git
 
-    cd $HOME
+    # TODO: Clone ssh repo, repair permissions
     git clone git@bitbucket.org:sudarkoff/bin.git
 
-    cd $HOME
     git clone https://github.com/sudarkoff/dotfiles.git "$HOME/.yadr"
     cd "$HOME/.yadr"
 
