@@ -1,13 +1,18 @@
 #!/bin/sh
 
+set -
+
 if [ ! -d "$HOME/.yadr" ]; then
     echo "Installing YADR for the first time"
 
-    # TODO: Check and install prerequisites
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
     brew update
     brew install git
 
+    cd $HOME
+    git clone git@bitbucket.org:sudarkoff/bin.git
+
+    cd $HOME
     git clone https://github.com/sudarkoff/dotfiles.git "$HOME/.yadr"
     cd "$HOME/.yadr"
 
