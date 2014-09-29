@@ -47,9 +47,11 @@ WHITE        = "\033[1;37m"
 DEFAULT      = "\033[0m"
 
 tagColors = dict(list(TAG_COLORS.items()) + list({
-   "@meta": DARK_GREY,
+   "@meta": LIGHT_GREY,
    "@warn": LIGHT_RED,
 }.items()))
+
+TAG_REGEX = r"(\@[0-9A-Za-z-_]+)(\:[0-9A-Za-z-_.]+)?\s+"
 
 # N days back from today
 defaultTimePeriod = DEFAULT_TIME_PERIOD
@@ -57,20 +59,16 @@ defaultTimePeriod = DEFAULT_TIME_PERIOD
 # ====================================================================
 
 def highlight_tags(matchobj):
-   """
-   Highlight tags.
-   """
-   COLOR = None
+   """Highlight tags."""
+   COLOR = WHITE
    try:
       COLOR = tagColors[matchobj.group(1)]
    except KeyError:
-      COLOR = WHITE
-   return COLOR + matchobj.group(1) + " " + DEFAULT
+      pass
+   return COLOR + matchobj.group(0) + DEFAULT
 
 def remove_tags(matchobj):
-   """
-   Remove tags.
-   """
+   """Remove tags."""
    return ""
 
 def to_timestamp(text):
@@ -78,9 +76,7 @@ def to_timestamp(text):
    return datetime(*time.strptime(text, "%Y-%m-%d %H:%M:%S")[:6])
 
 def reverse_date_sort(a, b):
-   """
-   Sort records in reverse chronological order.
-   """
+   """Sort records in reverse chronological order."""
    if (to_timestamp(a[:19]) > to_timestamp(b[:19])):
       return -1
    elif (to_timestamp(a[:19]) < to_timestamp(b[:19])):
@@ -89,8 +85,7 @@ def reverse_date_sort(a, b):
       return 0
 
 class LogRecord(object):
-   """
-   LogRecord contains a single record from the log file.
+   """LogRecord contains a single record from the log file.
 
    Log-file parser expects the following format:
    yyyy-mm-dd hh:mm:ss [@tag[ ...]] Log message.
@@ -111,6 +106,8 @@ class LogRecord(object):
 
 class Log(object):
    def __init__(self):
+      self.usage = "usage: %prog [options] <add|ls|list|tags>\n\t[D|YYYY-MM-DD..[YYYY-MM-DD]]\n\t" + \
+              "[@tag[:suffix][ ...]]\n\t[message]"
       self.get_options()
       if (self.action is None):
          self.parser.error("incorrect number of arguments")
@@ -121,9 +118,9 @@ class Log(object):
       # Add
       elif (self.action == "add"):
          if (self.args):
-            self.addAction(" ".join(self.args))
+             self.addAction(" ".join(self.args))
          else:
-            self.parser.error("usage: %prog add [@tag[ ...]] log message")
+             self.parser.error("add: too few parameters")
       # List
       elif (self.action == "ls" or self.action == "list"):
          if (len(self.args) > 0):
@@ -166,29 +163,28 @@ class Log(object):
       return (from_date, to_date)
 
    def get_options(self):
-      """
-      Parsing command-line options.
-      """
-      usage = "usage: %prog [options] <add|ls|list|tags>\n\t[D|YYYY-MM-DD..[YYYY-MM-DD]]\n\t" + \
-              "[@tag[ ...]]\n\t[message]"
-      self.parser = OptionParser(usage=usage, version="%prog " + __version__)
+      """Parsing command-line options."""
+      self.parser = OptionParser(usage=self.usage, version="%prog " + __version__)
       self.parser.add_option("-c", "--no-color",
                              action="store_true", dest="no_color", default=False,
                              help="do not use color in output [default: %default]")
       self.parser.add_option("-t", "--no-timestamp",
-                             action="store_true", dest="no_timestamp", default=False,
+                            action="store_true", dest="no_timestamp", default=False,
                              help="do not show timestamp [default: %default]")
       self.parser.add_option("-x", "--no-tags",
                              action="store_true", dest="no_tags", default=False,
                              help="do not show tags [default: %default]")
+      # TODO: Implement grouping by tag suffix to allow listing log entries in
+      # sections grouped by a project, for example.
+      self.parser.add_option("-g", "--group-by-tag",
+                             action="store", dest="group_by_tag", default=False,
+                             help="group by tag suffix (e.g.: @project:proj_name)")
       (self.options, args) = self.parser.parse_args()
       self.action = len(args) > 0 and args[0] or None
       self.args = len(args) > 1 and args[1:] or []
 
    def get_log_dict(self, from_date, to_date):
-      """
-      Obtain a dictionary of records from the LOG_FILE.
-      """
+      """Obtain a dictionary of records from the LOG_FILE."""
       count = 0
       records = {}
       # build a dictionary of the log items
@@ -202,18 +198,14 @@ class Log(object):
       return records
 
    def addAction(self, message):
-      """
-      Add new log record.
-      """
+      """Add new log record."""
       f = open(LOG_FILE, "a")
       timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
       f.write("%s %s%s" % (timestamp, message, os.linesep))
       f.close()
 
    def listAction(self, from_date=None, to_date=None, tags=None):
-      """
-      List log records that meet specified criteria.
-      """
+      """List log records that meet specified criteria."""
       items = []
       records = self.get_log_dict(from_date, to_date)
 
@@ -239,7 +231,7 @@ class Log(object):
       if (not self.options.no_timestamp):
          items.sort(reverse_date_sort)
 
-      re_tag = re.compile(r"(\@[0-9A-Za-z-_]+)\s+")
+      re_tag = re.compile(TAG_REGEX)
       for item in items:
          if (self.options.no_tags):
             print re_tag.sub(remove_tags, item)
@@ -249,13 +241,15 @@ class Log(object):
             print item
 
    def tagsAction(self):
-      """
-      List all recognized context tags.
-      """
+      """List all recognized context tags."""
       print "Colored context tags:"
-      re_tag = re.compile(r"(\@[A-Za-z]+)")
       for key in sorted(tagColors.keys()):
-         print "\t%s" % re_tag.sub(highlight_tags, key)
+          COLOR = WHITE
+          try:
+              COLOR = tagColors[key]
+          except KeyError:
+              pass
+          print "\t%s%s%s" % (COLOR, key, DEFAULT)
 
 if __name__ == "__main__":
    log = Log()
