@@ -44,6 +44,7 @@ Bundle "skwp/vim-easymotion"
 "Bundle "vim-scripts/camelcasemotion.git"
 "Bundle "vim-scripts/matchit.zip.git"
 "Bundle "terryma/vim-multiple-cursors"
+Bundle "reedes/vim-wordy"
 
 " Tabbable snippets
 Bundle "garbas/vim-snipmate.git"
