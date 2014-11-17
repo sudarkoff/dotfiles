@@ -19,8 +19,10 @@ Bundle "gmarik/vundle"
 " All your bundles here
 
 " Other languages
+Bundle "scrooloose/syntastic"
 Bundle "pangloss/vim-javascript"
 Bundle "othree/javascript-libraries-syntax.vim"
+Bundle "chase/vim-ansible-yaml"
 
 " Markdown...
 Bundle "jtratner/vim-flavored-markdown.git"
@@ -55,6 +57,7 @@ Bundle "rking/ag.vim"
 Bundle "tjennings/git-grep-vim"
 
 " General vim improvements
+Bundle "scrooloose/nerdtree"
 Bundle "fholgado/minibufexpl.vim"
 "Bundle "chrisbra/NrrwRgn"
 Bundle "MarcWeber/vim-addon-mw-utils.git"
@@ -79,6 +82,7 @@ Bundle "tomtom/tlib_vim.git"
 "Bundle "xsunsmile/showmarks.git"
 "Bundle "terryma/vim-multiple-cursors"
 Bundle "rbgrouleff/bclose.vim"
+Bundle "kien/ctrlp.vim"
 
 " Session Management
 "vim-misc is required for vim-session

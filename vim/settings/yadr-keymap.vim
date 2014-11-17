@@ -26,6 +26,20 @@ endfunction
 " dashes are very common, and in position that require
 " a lot of hand movement. Vim to the rescue
 "
+
+" Emacs-style movement on Vim command line
+:cnoremap <C-a>  <Home>
+:cnoremap <C-b>  <Left>
+:cnoremap <C-f>  <Right>
+:cnoremap <C-d>  <Delete>
+:cnoremap <M-b>  <S-Left>
+:cnoremap <M-f>  <S-Right>
+:cnoremap <M-d>  <S-right><Delete>
+:cnoremap <Esc>b <S-Left>
+:cnoremap <Esc>f <S-Right>
+:cnoremap <Esc>d <S-right><Delete>
+:cnoremap <C-g>  <C-c>
+
 " ," Surround a word with "quotes"
 map ," ysiw"
 vmap ," c"<C-R>""<ESC>
@@ -81,10 +95,7 @@ nnoremap ,. '.
 imap <C-a> <esc>wa
 
 " ==== NERD tree
-" Cmd-Shift-N for nerd tree
-nmap <D-N> :NERDTreeToggle<CR>
-" Open the project tree and expose current file in the nerdtree with Ctrl-\
-nnoremap <silent> <C-\> :NERDTreeFind<CR>:vertical res 30<CR>
+:nmap \e :NERDTreeToggle<CR>
 
 " ,q to toggle quickfix window (where you have stuff like GitGrep)
 " ,oq to open it back up (rare)
@@ -109,6 +120,15 @@ autocmd FileType c map <buffer> <D-j> {
 map <D-/> :TComment<CR>
 imap <D-/> <Esc>:TComment<CR>i
 
+" Quickly switch between popular (and unpopular) tab modes
+:nmap \t :set expandtab tabstop=4 shiftwidth=4 softtabstop=4<CR>
+:nmap \T :set expandtab tabstop=8 shiftwidth=8 softtabstop=4<CR>
+:nmap \M :set noexpandtab tabstop=8 softtabstop=4 shiftwidth=4<CR>
+:nmap \m :set expandtab tabstop=2 shiftwidth=2 softtabstop=2<CR>
+
+" Quickly switch wrapping on/off
+:nmap \w :setlocal wrap!<CR>:setlocal wrap?<CR>
+
 "GitGrep - open up a git grep line, with a quote started for the search
 nnoremap ,gg :GitGrep ""<left>
 "GitGrep Current Partial
@@ -125,13 +145,20 @@ nnoremap <silent> ,h :bn<CR>
 " ==============================
 " Window/Tab/Split Manipulation
 " ==============================
+" Move to next/previous buffer with Ctrl-n and Ctrl-p
+:nmap <C-n> :bnext<CR>
+:nmap <C-p> :bprev<CR>
+
+" Fuzzy search for buffers
+:nmap ; :CtrlPBuffer<CR>
+
 " Move between split windows by using the four directions H, L, I, N
 nnoremap <silent> <C-h> <C-w>h
 nnoremap <silent> <C-l> <C-w>l
 nnoremap <silent> <C-k> <C-w>k
 nnoremap <silent> <C-j> <C-w>j
 
-" Make gf (go to file) create the file, if not existent
+" Make gf (go to file) create the file, if it doesn't exist
 nnoremap gf :e<cfile><CR>
 nnoremap <C-w>f :sp +e<cfile><CR>
 nnoremap <C-w>gf :tabe<cfile><CR>
