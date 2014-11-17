@@ -1,6 +1,6 @@
 ### Directory bookmarking (dirmarking) and navigation functions
 
-# jump to a dirmark WITHOUT saving current location in the stack
+# jump to a dirmark or $SRC/directory WITHOUT saving current location in the stack
 # (calling it with no arguments will cycle between current and previous stack entries)
 # Ex.: @ doc
 function @ () {
@@ -9,6 +9,13 @@ function @ () {
    else
       local str="\$mm_$1";
       eval "[ -n \"$str\" ] && cd $str";
+      # Dirmark doesn't exist?
+      if [ $? -ne 0 ]; then
+          # See if there is a directory with this name in $SRC
+          if [ -d $SRC/$1 ]; then
+              cd $SRC/$1
+          fi
+      fi
    fi
 }
 
@@ -19,7 +26,14 @@ function + () {
       eval popd;
    else
       local str="\$mm_$1";
-      eval pushd $str;
+      eval "[ -n \"$str\" ] && pushd $str";
+      # Dirmark doesn't exist?
+      if [ $? -ne 0 ]; then
+          # See if there is a directory with this name in $SRC
+          if [ -d $SRC/$1 ]; then
+              cd $SRC/$1
+          fi
+      fi
    fi
 }
 
@@ -38,13 +52,5 @@ function m () {
 # remove dirmark
 function - () {
    eval unset mm_$1;
-}
-
-# preset a dirmark if the target directory exists
-# (used primarily in other functions or *.zsh configs)
-function _m_set() {
-   if [ -d $2 ]; then
-      eval mm_$1=$2;
-   fi
 }
 
