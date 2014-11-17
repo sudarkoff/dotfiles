@@ -14,51 +14,28 @@ alias mon-dell30inch  2560x1600
 
 ### Position Aliases
 
-# laptop1440 (my non-retina macbook pro and air)
-alias 1-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY         ${mon-laptop1440}
-alias 1-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY       ${mon-laptop1440}
-alias 1-cntr  move screenOriginX+screenSizeX/9;screenOriginY+screenSizeY/13  7*screenSizeX/9;11*screenSizeY/13 ${mon-laptop1440}
-alias 1-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY           ${mon-laptop1440}
+# laptop
+alias 1-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY
+alias 1-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY
+alias 1-cntr  move screenOriginX+screenSizeX/9;screenOriginY+screenSizeY/13  7*screenSizeX/9;11*screenSizeY/13
+alias 1-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY
 
-# laptop2880 (SM retina macbook pro)
-alias 1-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY         ${mon-laptop2880}
-alias 1-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY       ${mon-laptop2880}
-alias 1-cntr  move screenOriginX+screenSizeX/9;screenOriginY+screenSizeY/13  7*screenSizeX/9;11*screenSizeY/13 ${mon-laptop2880}
-alias 1-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY           ${mon-laptop2880}
-
-# dell 22" monitor
-alias 2-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY         ${mon-dell22inch}
-alias 2-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY       ${mon-dell22inch}
-alias 2-cntr  move screenOriginX+screenSizeX/9;screenOriginY+screenSizeY/13  7*screenSizeX/9;11*screenSizeY/13 ${mon-dell22inch}
-alias 2-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY           ${mon-dell22inch}
-alias 2-bot   move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX;screenSizeY/2         ${mon-dell22inch}
-alias 2-bot-l move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX/3;screenSizeY/2       ${mon-dell22inch}
-alias 2-bot-m move screenOriginX+screenSizeX/3;screenOriginY+screenSizeY/2   screenSizeX/3;screenSizeY/2       ${mon-dell22inch}
-alias 2-bot-r move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2       ${mon-dell22inch}
-alias 2-mid   move screenOriginX+screenSizeX/8;screenOriginY+screenSizeY/8   3*screenSizeX/4;3*screenSizeY/4   ${mon-dell22inch}
-alias 2-top   move screenOriginX;screenOriginY                               screenSizeX;screenSizeY/2         ${mon-dell22inch}
-alias 2-top-l move screenOriginX;screenOriginY                               screenSizeX/2;screenSizeY/2       ${mon-dell22inch}
-alias 2-top-m move screenOriginX+screenSizeX/6;screenOriginY                 2*screenSizeX/3;screenSizeY/2     ${mon-dell22inch}
-alias 2-top-r move screenOriginX+screenSizeX/2;screenOriginY                 screenSizeX/2;screenSizeY/2       ${mon-dell22inch}
-alias 2-left  move screenOriginX;screenOriginY                               screenSizeX/2;screenSizeY         ${mon-dell22inch}
-alias 2-right move screenOriginX+screenSizeX/2;screenOriginY                 screenSizeX/2;screenSizeY         ${mon-dell22inch}
-
-# dell 30" monitor
-alias 2-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY         ${mon-dell30inch}
-alias 2-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY       ${mon-dell30inch}
-alias 2-cntr  move screenOriginX+screenSizeX/9;screenOriginY+screenSizeY/13  7*screenSizeX/9;11*screenSizeY/13 ${mon-dell30inch}
-alias 2-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY           ${mon-dell30inch}
-alias 2-bot   move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX;screenSizeY/2         ${mon-dell30inch}
-alias 2-bot-l move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX/3;screenSizeY/2       ${mon-dell30inch}
-alias 2-bot-m move screenOriginX+screenSizeX/3;screenOriginY+screenSizeY/2   screenSizeX/3;screenSizeY/2       ${mon-dell30inch}
-alias 2-bot-r move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2       ${mon-dell30inch}
-alias 2-mid   move screenOriginX+screenSizeX/8;screenOriginY+screenSizeY/8   3*screenSizeX/4;3*screenSizeY/4   ${mon-dell30inch}
-alias 2-top   move screenOriginX;screenOriginY                               screenSizeX;screenSizeY/2         ${mon-dell30inch}
-alias 2-top-l move screenOriginX;screenOriginY                               screenSizeX/2;screenSizeY/2       ${mon-dell30inch}
-alias 2-top-m move screenOriginX+screenSizeX/6;screenOriginY                 2*screenSizeX/3;screenSizeY/2     ${mon-dell30inch}
-alias 2-top-r move screenOriginX+screenSizeX/2;screenOriginY                 screenSizeX/2;screenSizeY/2       ${mon-dell30inch}
-alias 2-left  move screenOriginX;screenOriginY                               screenSizeX/2;screenSizeY         ${mon-dell30inch}
-alias 2-right move screenOriginX+screenSizeX/2;screenOriginY                 screenSizeX/2;screenSizeY         ${mon-dell30inch}
+# big external monitor
+alias 2-chat  move screenOriginX;screenOriginY                               screenSizeX/9;screenSizeY
+alias 2-main  move screenOriginX+screenSizeX/9;screenOriginY                 8*screenSizeX/9;screenSizeY
+alias 2-cntr  move screenOriginX+screenSizeX/9;screenOriginY+screenSizeY/13  7*screenSizeX/9;11*screenSizeY/13
+alias 2-full  move screenOriginX;screenOriginY                               screenSizeX;screenSizeY
+alias 2-bot   move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX;screenSizeY/2
+alias 2-bot-l move screenOriginX;screenOriginY+screenSizeY/2                 screenSizeX/3;screenSizeY/2
+alias 2-bot-m move screenOriginX+screenSizeX/3;screenOriginY+screenSizeY/2   screenSizeX/3;screenSizeY/2
+alias 2-bot-r move screenOriginX+2*screenSizeX/3;screenOriginY+screenSizeY/2 screenSizeX/3;screenSizeY/2
+alias 2-mid   move screenOriginX+screenSizeX/8;screenOriginY+screenSizeY/8   3*screenSizeX/4;3*screenSizeY/4
+alias 2-top   move screenOriginX;screenOriginY                               screenSizeX;screenSizeY/2
+alias 2-top-l move screenOriginX;screenOriginY                               screenSizeX/2;screenSizeY/2
+alias 2-top-m move screenOriginX+screenSizeX/6;screenOriginY                 2*screenSizeX/3;screenSizeY/2
+alias 2-top-r move screenOriginX+screenSizeX/2;screenOriginY                 screenSizeX/2;screenSizeY/2
+alias 2-left  move screenOriginX;screenOriginY                               screenSizeX/2;screenSizeY
+alias 2-right move screenOriginX+screenSizeX/2;screenOriginY                 screenSizeX/2;screenSizeY
 
 ### 2 Monitor layout
 layout 2monitors 'Terminal':SORT_TITLE                    ${2-full}
@@ -89,10 +66,10 @@ layout 1monitor 'Calendar':REPEAT                        ${1-full}
 layout 1monitor 'Pocket':REPEAT                          ${1-full}
 
 ### Default Layouts
-default 2monitors resolutions:${mon-laptop2880};${mon-dell30inch}
-default 2monitors resolutions:${mon-laptop1440};${mon-dell22inch}
-default 1monitor  resolutions:${mon-laptop1440}
 default 1monitor  resolutions:${mon-laptop2880}
+default 2monitors resolutions:${mon-laptop2880};${mon-dell30inch}
+#default 1monitor  resolutions:${mon-laptop1440}
+#default 2monitors resolutions:${mon-laptop1440};${mon-dell22inch}
 
 # Layout Bindings
 bind 1:ctrl,cmd,shift layout 1monitor
