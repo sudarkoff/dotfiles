@@ -1,5 +1,14 @@
 ### Directory bookmarking (dirmarking) and navigation functions
 
+# activate a virtual env if it's present
+function activate_venv () {
+    if [ -d .venv ]; then
+        . .venv/bin/activate
+    elif [ -n $VIRTUAL_ENV ]; then
+        deactivate
+    fi
+}
+
 # jump to a dirmark or $SRC/directory WITHOUT saving current location in the stack
 # (calling it with no arguments will cycle between current and previous stack entries)
 # Ex.: @ doc
@@ -8,12 +17,12 @@ function @ () {
       pushd
    else
       local str="\$mm_$1";
-      eval "[ -n \"$str\" ] && cd $str";
+      eval "[ -n \"$str\" ] && cd $str && activate_venv";
       # Dirmark doesn't exist?
       if [ $? -ne 0 ]; then
           # See if there is a directory with this name in $SRC
           if [ -d $SRC/$1 ]; then
-              cd $SRC/$1
+              cd $SRC/$1 && activate_venv
           fi
       fi
    fi
@@ -26,12 +35,12 @@ function + () {
       eval popd;
    else
       local str="\$mm_$1";
-      eval "[ -n \"$str\" ] && pushd $str";
+      eval "[ -n \"$str\" ] && pushd $str && activate_venv";
       # Dirmark doesn't exist?
       if [ $? -ne 0 ]; then
           # See if there is a directory with this name in $SRC
           if [ -d $SRC/$1 ]; then
-              cd $SRC/$1
+              pushd $SRC/$1 && activate_venv
           fi
       fi
    fi
