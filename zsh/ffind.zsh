@@ -29,6 +29,7 @@ sql_ext=("*.sql")
 html_ext=("*.htm" "*.html" "*.css")
 xml_ext=("*.xml" "*.xsl")
 json_ext=("*.json")
+yaml_ext=("*.yml" "*.yaml")
 sc_ext=("SConstruct" "SConscript" "*.sc")
 mk_ext=("Makefile" "*.mk")
 src_ext=(${c_ext} ${py_ext} ${pl_ext} ${java_ext} ${js_ext} ${sql_ext} ${html_ext} ${sc_ext} ${mk_ext})
@@ -59,7 +60,7 @@ function _lang_extensions_for_find () {
 # Grep for a pattern in all source files for a given language (e.g.: findgrep c <regex>)
 function findgrep () {
   if [[ "$1" == "--help" || "$1" == "" ]]; then
-    echo "Usage: findgrep <pattern> <c|py|pl|java|js|sql|html|xml|json|sc|mk|src|sh|md|...>"
+    echo "Usage: findgrep <pattern> <c|py|pl|java|js|sql|html|xml|json|yaml|sc|mk|src|sh|md|...>"
     echo "Search for a 'regexp' in all files of a specified type starting from the current directory."
     return 1
   fi
@@ -74,7 +75,7 @@ function findgrep () {
 }
 
 # Define *find aliases for various programming languages
-for lng in c py pl java js sql html xml json sc mk src sh md; do
+for lng in c py pl java js sql html xml json yaml sc mk src sh md; do
   # Search recursively starting from the current directory (local)
   alias ${lng}find='findgrep '$lng' $1'
 done
