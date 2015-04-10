@@ -10,8 +10,6 @@
 # If the relative date is not passed on the command line, assume the following Friday
 # (i.e., print status for the current week).
 
-# TODO: List bug activity
-# TODO: List commits
 # TODO: cover the following use cases:
 #  - if no parameter is passed, list items for the current week (between last Monday and next Sunday)
 #  - if a single date is passed, assume it's a Monday of the week of interest and list items for that week
@@ -30,22 +28,24 @@ DATE=${1:-+Friday}
 LOG_OPTS="--no-color --no-timestamp --no-tags --group-by-tag=@project"
 LOG_DATE_RANGE="$(date -v$DATE -v-4d +%Y-%m-%d)..$(date -v$DATE -v+2d +%Y-%m-%d)"
 
-printf "# $(date -v$DATE -v-4d '+%B %d') -- $(date -v$DATE -v+2d '+%B %d')\n"
+printf "Status for $(date -v$DATE -v-4d '+%B %d') -- $(date -v$DATE -v+2d '+%B %d')\n"
 
-printf "\n## Summary\n\n"
-printf "<executive summary>\n"
+printf "\n# Summary\n\n"
 log $LOG_OPTS list @summary $LOG_DATE_RANGE | sed "s/^/ - /"
 
-printf "\n## Red Flags\n\n"
-printf "<concerns, problem, obstacles>\n"
+printf "\n# Red Flags\n\n"
 log $LOG_OPTS list @warn $LOG_DATE_RANGE | sed "s/^/ - /"
 
-printf "\n## Next week\n\n"
-printf "<what's next?>\n"
+printf "\n# Next Week\n\n"
+log $LOG_OPTS list @next $LOG_DATE_RANGE | sed "s/^/ - /"
 
-printf "\n## Meetings/Discussions\n\n"
+printf "\n# Meetings/Discussions\n\n"
 log $LOG_OPTS list @talk $LOG_DATE_RANGE | sed "s/^/ - /"
 
-printf "\n## Other tasks\n\n"
+printf "\n# Other Tasks\n\n"
 log $LOG_OPTS list @task $LOG_DATE_RANGE | sed "s/^/ - /"
 
+# TODO: List commits
+#printf "\n# Commits\n\n"
+# TODO: List bug activity
+#printf "\n# Bugs\n\n"
